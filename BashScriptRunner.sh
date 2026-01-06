@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 #___________________________________________________
 
@@ -21,10 +22,11 @@ fi
 
 # 2. Run dependency checker
 python3 CheckScannerDependencies.py
-echo "Dependency checker exit code: $exit_code"
 exit_code=$?
 
-if [ $exit_code -ne 0 ]; then
+echo "Dependency checker exit code: $exit_code"
+
+if [ "$exit_code" -ne 0 ]; then
     echo "Dependencies not met. Scanner will NOT start."
     exit 1
 fi
@@ -33,5 +35,6 @@ read -p "Press Enter to continue to the scanner..."
 
 # 3. If all dependencies are met, run the Automated Scanner
 python3 AutomatedScanner.py
+
 
 
